@@ -1,6 +1,6 @@
 <?php
 
-include "../env.php";
+include "./env.php";
 
     function connectBDD() {       
         return new PDO('mysql:host=' . BDD_SERVER . ';dbname=' . BDD_NAME .'',
