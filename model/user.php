@@ -29,24 +29,51 @@ function addUser() {
 function isUserByEmailExists(): bool
     {
         try {
-            //Récupération de la valeur de name (category)
             $email = $_POST["email"];
-            //Ecrire la requête SQL
+
             $request = "SELECT u.id_users FROM users AS u WHERE u.email = ?";
-            //préparer la requête
+
             $req = connectBDD()->prepare($request);
-            //assigner le paramètre
             $req->bindParam(1, $email, \PDO::PARAM_STR);
-            //exécuter la requête
             $req->execute();
-            //récupérer le resultat
             $data = $req->fetch(\PDO::FETCH_ASSOC);
-            //Test si l'enrgistrement est vide
+
             if (empty($data)) {
                 return false;
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
+    }
+
+function findUserByEmail($email): array
+    {
+        try {
+            $email = $_POST["email"];
+
+            $request = "SELECT u.id_users AS idUser, u.firstname, u.lastname, u.password, u.email FROM users AS u WHERE u.email = ?";
+
+            $req = connectBDD()->prepare($request);
+            $req->bindParam(1, $email, \PDO::PARAM_STR);
+            $req->execute();
+            
+            $req->setFetchMode(\PDO::FETCH_ASSOC);
+
+            return $req->fetch();
+            
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    function hashPassword(string $password) : string
+    {
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        return $password;
+    }
+
+    function passwordVerify(string $password, string $hash) : bool 
+    {
+        return password_verify($password, $hash);
     }

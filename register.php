@@ -13,7 +13,7 @@ function saveUser() {
             $firstname = sanitize($_POST["firstname"]);
             $email = sanitize($_POST["email"]);
             $password = sanitize($_POST["password"]);
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            $password = hashPassword($password);
             if (!isUserByEmailExists($email)) {
                 addUser();
                 return "Le compte a bien été créé.";
@@ -24,11 +24,6 @@ function saveUser() {
     }
     return "test";
 }
-
-// function hashPassword() : void 
-//     {
-//         $password = password_hash($password, PASSWORD_DEFAULT);
-//     }
 
 saveUser();
 

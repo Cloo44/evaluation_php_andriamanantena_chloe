@@ -17,8 +17,12 @@
 
 <?php
 
-session_start();
+function deconnexion()
+    {
+        session_destroy();
+        header('Location: /index.php/');
+    }
 
-session_destroy();
+deconnexion();
 
-header('Location: ./index.php'); ?>
+?>
