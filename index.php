@@ -1,11 +1,3 @@
-<?php
-    //page d'accueil avec menu connecté / déconnecté
-    // <?php if (isset($_SESSION["connected"])) :
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,17 +8,26 @@
     </head>
     <body>
         <nav>
-            <!-- Menu connecté -->
+            
             <ul>
+                <!-- Menu connecté -->
+                <?php if (isset($_SESSION["connected"])) : ?>
                 <li><a href="addBook.php">Ajouter un livre à sa collection</a></li>
                 <li><a href="showAllBook.php">Afficher sa collection</a></li>
                 <li><a href="deconnexion.php">Se déconnecter</a></li>
 
-            <!-- Menu déconnecté -->                
+            <!-- Menu déconnecté -->
+                <?php else : ?>              
                 <li><a href="register.php">S'inscrire</a></li>
-                <li><a href="connexion.php">Se connecter</a></li>                
+                <li><a href="connexion.php">Se connecter</a></li> 
+                <?php endif ?>               
             </ul>
         </nav>
         
     </body>
 </html>
+
+<?php
+    session_start();
+    
+?>
